@@ -1,0 +1,14 @@
+<%= simple_form_for [@settings, @payment_method] do |f| %>
+	<%= f.input :payment_type_id, collection: @payment_methods_data.payment_methods { |payment_method| [payment_method.name, payment_method.id] }, as: :select, include_blank: false %>
+
+	<%= f.input :payment_account_id, collection: @account_data.cash_bank { |cash_bank| [cash_bank.name, cash_bank.id] }, as: :select, include_blank: false %>
+
+	<%= f.label 'Payment Fee -  percentage of Total' %>
+	<%= f.number_field :payment_fee_percentage, class: :text_field, step: :any %>
+	<br>
+	<%= f.label 'Payment Fee - Fixed' %>
+	<%= f.number_field :payment_fee_fixed, class: :text_field, step: :any %>
+  	<br>
+
+  <%= f.button :submit %>
+<% end %>

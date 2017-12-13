@@ -1,0 +1,74 @@
+- content_for :head do
+  %meta{name: "turbolinks-cache-control", content: "no-cache"}
+  
+.container-fluid#edit-setting
+  .row
+    .col-sm-12.col-md-6
+      .title.color-black.font-20.padding-bottom-20
+        = t('setting.configuration')
+      .row.row-eq-height.align-items-center.form-row.clear-topbottom-pad.padding-bottom-20
+        .font-family-medium.col-xs-5.col-sm-3.col-md-5
+          = t('setting.code')
+        .col-xs-12.col-sm-5.col-md-7
+          .wrapper-setting-code
+            .clipboard-btn.btn.btn-setting-code.margin-bottom-10.font-family-tnr{"data-clipboard-action" => "copy", "data-clipboard-text" => @setting.code}
+              = @setting.code
+            %a.link-blue.font-12{'data-toggle' => 'modal', 'data-target' => '#popup-see-devices'}
+              = t('setting.see-devices')
+      / uncomment this if main app can support qr code
+      / .row
+      /   .col-xs-5.col-sm-3.col-md-5
+      /   .col-xs-5.col-sm-5.col-md-7.text-center
+      /     .wrapper-setting-code
+      /       %img{:src => generate_qr(@setting.code)}
+      = render partial: 'form'
+
+      .row
+        .title.padding-bottom-20.font-family-medium.col-xs-6.col-sm-7
+          = t('setting.pay-method')
+        %a.col-xs-6.col-sm-5.text-right.link-blue#add-payment-method{'data-device-name' => 'pawla'}
+          = t('setting.add-pay-method')
+      .row
+        .col-sm-12.z-index
+          %table.table#table-payment-method
+            %tbody
+              - @payment_methods.each do |payment_method|
+                %tr
+                  %td.col-xs-10.padding-cell.info-cell.payment-method-name
+                    = payment_method.payment_type_name
+                  %td.edit-payment-method.col-xs-1.link.link-blue{'data-id' => payment_method.id}
+                    = t('setting.edit')
+                  %td.delete-payment-method.col-xs-1.link.link-red{'data-id' => payment_method.id}
+                    = t('setting.delete')
+
+
+      .row
+        .col-sm-12.row-eq-height.justify-content-end
+          = link_to t('setting.back'), home_dashboard_path(:access_token => @token), :class => 'btn btn-grey min-w120 margin-right-20'
+          %button#setting-form-submit.btn.btn-green.min-w120.pull-right{:type => 'submit'}
+            .save
+              = t('setting.save')
+            .process
+              = t('btn.process')
+
+  = render partial: 'popup_add_pay_method'
+  = render partial: 'popup_see_devices'
+  = render partial: 'popup_error_setting_form'
+
+#spinner-group.spinner.hidden
+  .double-bounce1
+  .double-bounce2
+#spinner-backdrop.hidden
+
+%script
+  var edit_payment_method = #{raw @payment_methods_json.to_json};
+  var payment_method_url = '#{@payment_method_url}';
+  var device_url = '#{@device_url}';
+  var edit_payment_method_url = '#{@edit_payment_method_url}';
+  var edit_text = '#{t('setting.edit')}';
+  var delete_text = '#{t('setting.delete')}';
+
+- content_for :scripts do
+  = javascript_include_tag 'jquery.serialize-object.min', "data-turbolinks-track" => true
+  = javascript_include_tag 'multi-modal', "data-turbolinks-track" => true
+  = javascript_include_tag 'select2-ajax', "data-turbolinks-track" => true

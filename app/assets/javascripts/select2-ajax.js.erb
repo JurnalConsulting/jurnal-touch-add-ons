@@ -1,0 +1,107 @@
+$('.select2-wrapper-warehouse select').select2({
+  ajax: { 
+    type: 'GET', 
+    url: '<%= Rails.application.routes.url_helpers.get_warehouse_select2_ajax_resources_path %>',
+    dataType: 'json',
+    delay: 250,
+    cache: true,
+    data: function (params) {
+      var query = {
+        q: params.term
+      }
+      return query;
+    },
+    processResults: function (json_data) {
+      return {
+        results: $.map(json_data.data.warehouses, function (item){
+          return {
+            id: item.id,
+            text: item.name
+          }
+        })
+      }
+    }
+  }
+});
+
+$('.select2-wrapper-tags select').select2({
+  ajax: { 
+    type: 'GET', 
+    url: '<%= Rails.application.routes.url_helpers.get_tag_select2_ajax_resources_path %>',
+    dataType: 'json',
+    delay: 250,
+    cache: true,
+    data: function (params) {
+      var query = {
+        q: params.term
+      }
+      return query;
+    },
+    processResults: function (json_data) {
+      return {
+        results: $.map(json_data.data.data, function (item){
+          return {
+            id: item.id,
+            text: item.name
+          }
+        })
+      }
+    }
+  }
+});
+
+$('.select2-wrapper-payment-account select').select2({
+  ajax: { 
+    type: 'GET', 
+    url: '<%= Rails.application.routes.url_helpers.get_account_select2_ajax_resources_path %>',
+    dataType: 'json',
+    delay: 250,
+    cache: true,
+    data: function (params) {
+      var query = {
+        q: params.term,
+        type: 'cash',
+        priority: 'cash-bank'
+      }
+      return query;
+    },
+    processResults: function (json_data) {
+      return {
+        results: $.map(json_data.data.data, function (item){
+          return {
+            id: item.id,
+            text: item.name
+          }
+        })
+      }
+    }
+  }
+});
+
+$('.select2-wrapper-payment-fee-account select').select2({
+  ajax: { 
+    type: 'GET', 
+    url: '<%= Rails.application.routes.url_helpers.get_account_select2_ajax_resources_path %>',
+    dataType: 'json',
+    delay: 250,
+    cache: true,
+    data: function (params) {
+      var query = {
+        q: params.term,
+        type: 'expense',
+        priority: 'cogs-expense'
+      }
+      return query;
+    },
+    processResults: function (json_data) {
+      return {
+        results: $.map(json_data.data.data, function (item){
+          return {
+            id: item.id,
+            text: item.name
+          }
+        })
+      }
+    }
+  }
+});

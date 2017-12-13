@@ -1,0 +1,72 @@
+.modal.fade.custom-modal.modal-600.center-modal#popup-see-devices
+  .modal-dialog
+    .modal-content.border-r2
+      .modal-body
+        .row.padding-10.clear-topbottom-pad
+          .title.font-family-regular.font-20.col-xs-11
+            = t('setting.table-devices.title')
+          %button{:class => 'close col-xs-1', 'data-dismiss' => 'modal'} ×
+        .row
+          .col-sm-12.z-index
+            %table.table#table-see-devices
+              %thead
+                %th
+                  = t('setting.table-devices.index')
+                %th
+                  = t('setting.table-devices.device-name')
+                %th
+                  = t('setting.table-devices.id')
+                %th
+                  = t('setting.table-devices.version')
+                %th
+                  = t('setting.table-devices.os-version')
+                %th
+                  = t('setting.table-devices.last-sync')
+                %th
+              %tbody
+                - if @devices.length > 0
+                  - @devices.each do |device|
+                    %tr{'data-id' => device.id}
+                      %td.index
+                      %td
+                        = device.device_name
+                        %br
+                        .font-12
+                          = device.device_os_version
+                      %td
+                        = device.device_id
+                      %td
+                        = device.device_os_version
+                      %td
+                        = device.device_app_version
+                      %td
+                        - if !device.last_sync.nil?
+                          = device.last_sync.try(:strftime,'%d/%m/%Y %H.%M')
+                          %br
+                          .font-12
+                            = t('setting.table-devices.location')
+                            = device.reverse_geocode
+                        - else
+                          = "-"
+                      %td
+                        %a.delete-devices
+                          X
+                - else
+                  %tr
+                    %td{:colspan => "6"}
+                      .row.row-eq-height
+                        .col-xs-5.row-eq-height.justify-content-end.align-items-center
+                          = image_tag 'jurnal.png', :class => 'img-responsive', :style => 'max-width:100px;'
+                        .col-xs-6
+                          = t('dashboard.table.device-empty').html_safe
+
+.modal.fade.custom-modal.modal-600.center-modal#popup-delete-devices
+  .modal-dialog
+    .modal-content.border-r2
+      .modal-body
+        .font-family-regular
+          = t('setting.table-devices.delete-device-confirmation')
+      .modal-footer
+        %button{:class => 'btn min-w120 border-r2 btn-grey', 'data-dismiss' => 'modal'} 
+          = t('btn.cancel')
+        = link_to t('btn.proceed'), setting_device_path(setting_id: params[:id], device_id: 0), method: :delete, remote: :true, data: { type: 'json' }, :class => "btn min-w120 border-r2 btn-green", :id => "popup-delete-confirm"

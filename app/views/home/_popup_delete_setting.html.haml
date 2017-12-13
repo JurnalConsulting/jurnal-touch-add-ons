@@ -1,0 +1,9 @@
+.modal.fade.custom-modal.modal-400.center-modal#popup-delete-setting
+  .modal-dialog
+    .modal-content.border-r2
+      .modal-body
+        = t('dashboard.delete-setting-confirmation').html_safe
+      .modal-footer
+        .btn.min-w120.border-r2.btn-blue{data: { dismiss: "modal"}}
+          = t('btn.cancel')
+        = link_to t('btn.delete'), setting_path(0), method: :delete, :class => 'btn min-w120 border-r2 btn-red', :id => 'popup-delete-setting-btn', data: {disable_with: t('btn.process')}

@@ -1,0 +1,36 @@
+= simple_form_for @payment_method, :url => payment_method_url, :html => {:id => 'payment-method-form'}, :authenticity_token => true, 'data-type' => 'json' do |f|
+  = f.hidden_field :token, :value => @setting.token
+  = f.hidden_field :payment_type_name, :value => ''
+  = f.hidden_field :id, :value => ''
+  = f.hidden_field :temp_id, :value => ''
+  .row-eq-height.align-items-center.align-items-start-column-mobile.form-row.clear-topbottom-pad.padding-bottom-20#payment-method-type-select-wrapper
+    = f.label :payment_type_id, :class => 'font-family-regular col-xs-10 col-sm-5' do
+      = t('payment-method.type')
+      = icon('question-circle', '', 'data-toggle' => 'tooltip', 'data-placement' => 'right', :title => t('payment-method.type-tooltip'))
+    .input-wrapper.col-xs-12.col-sm-7.select2-wrapper
+      = f.input :payment_type_id, collection: @payment_methods_data.payment_methods { |payment_method| [payment_method.name, payment_method.id] }, label: false, include_blank: false, input_html: { required: true }
+  .row-eq-height.align-items-center.align-items-start-column-mobile.form-row.clear-topbottom-pad.padding-bottom-20#payment-method-account-select-wrapper
+    = f.label :payment_account_id, :class => 'font-family-regular col-xs-10 col-sm-5' do
+      = t('payment-method.acc')
+      = icon('question-circle', '', 'data-toggle' => 'tooltip', 'data-placement' => 'right', :title => t('payment-method.acc-tooltip'))
+    .input-wrapper.col-xs-12.col-sm-7.select2-wrapper-payment-account
+      = f.input :payment_account_id, collection: @account_data.cash_bank.map { |cash_bank| [ '(' + cash_bank.number + ') - ' + cash_bank.name +  ' - (' + cash_bank.category + ')', cash_bank.id] }, label: false, include_blank: false, input_html: { required: true }
+  .row-eq-height.align-items-center.align-items-start-column-mobile.form-row.clear-topbottom-pad.padding-bottom-20
+    = f.label '', :class => 'font-family-regular col-xs-10 col-sm-5' do
+      = t('payment-method.fee-total')
+      = icon('question-circle', '', 'data-toggle' => 'tooltip', 'data-placement' => 'right', :title => t('payment-method.fee-total-tooltip'))
+    = f.input :payment_fee_percentage, :type => :number, :wrapper_html => {:class => "col-xs-12 col-sm-7 input-wrapper"}, label: false, include_blank: false, input_html: { required: true, :class => "input-resize input-border force-max-min-attr" , max: '100', min: '0'}
+  .row-eq-height.align-items-center.align-items-start-column-mobile.form-row.clear-topbottom-pad.padding-bottom-20
+    = f.label '', :class => 'font-family-regular col-xs-10 col-sm-5' do
+      = t('payment-method.fee-fixed')
+      = icon('question-circle', '', 'data-toggle' => 'tooltip', 'data-placement' => 'right', :title => t('payment-method.fee-fixed-tooltip'))
+    = f.input :payment_fee_fixed, :wrapper_html => {:class => "col-xs-12 col-sm-7 input-wrapper"}, label: false, include_blank: false, input_html: { required: true, class: "input-resize input-border" }
+  .row-eq-height.align-items-center.align-items-start-column-mobile.form-row.clear-topbottom-pad.padding-bottom-20#payment-method-fee-account-select-wrapper
+    = f.label :payment_fee_account_id, :class => 'font-family-regular col-xs-10 col-sm-5' do
+      = t('payment-method.fee-acc')
+      = icon('question-circle', '', 'data-toggle' => 'tooltip', 'data-placement' => 'right', :title => t('payment-method.fee-acc-tooltip'))
+    .input-wrapper.col-xs-12.col-sm-7.select2-wrapper-payment-fee-account
+      = f.input :payment_fee_account_id, collection: @account_data.expense.map { |expense| [ '(' + expense.number + ') - ' + expense.name +  ' - (' + expense.category + ')', expense.id] }, label: false, include_blank: false, input_html: { required: true }
+  .modal-footer
+    = f.button :button, t('payment-method.reset'), :type => 'reset', :class => 'btn min-w120 border-r2 btn-grey', :id => 'reset-form'
+    = f.button :submit, :class => 'btn min-w120 border-r2 btn-green', :value => t('payment-method.save')

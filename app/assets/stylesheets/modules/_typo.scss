@@ -1,0 +1,42 @@
+@include font-face('Roboto-Light', font-files('Roboto-Light.ttf'));
+@include font-face('Roboto-Medium', font-files('Roboto-Medium.ttf'));
+@include font-face('Roboto-Regular', font-files('Roboto-Regular.ttf'));
+@include font-face('Roboto-Bold', font-files('Roboto-Bold.ttf'));
+
+@include font-face('Times-New-Roman', font-files('Times-New-Roman.ttf'));
+
+// Font Weights
+$font-family--light    : 'Roboto-Light';
+$font-family--regular  : 'Roboto-Regular';
+$font-family--medium   : 'Roboto-Medium';
+$font-family--bold     : 'Roboto-Bold';
+
+$font-family--tnr      : 'Times-New-Roman';
+
+.font-12 {
+  font-size: 12px;
+}
+
+.font-20 {
+  font-size: 20px;
+}
+
+.font-family-light {
+  font-family: $font-family--light;
+}
+
+.font-family-regular {
+  font-family: $font-family--regular;
+}
+
+.font-family-medium {
+  font-family: $font-family--medium;
+}
+
+.font-family-bold {
+  font-family: $font-family--bold;
+}
+
+.font-family-tnr {
+  font-family: $font-family--tnr !important;
+}

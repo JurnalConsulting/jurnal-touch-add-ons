@@ -1,0 +1,38 @@
+@mixin breakpoint($breakpoint, $media: all) {
+  @if $breakpoint == wvga {
+    @media only screen and (max-width: 480px)  { @content; }
+  }
+  @if $breakpoint == mobile {
+    @media only screen and (max-width: 767px)  { @content; }
+  }
+  @if $breakpoint == tablet_s {
+    @media only screen and (max-width: 768px) { @content; }
+  }
+  @if $breakpoint == tablet_bs {
+    @media only screen and (max-width: 991px) { @content; }
+  }
+  @if $breakpoint == tablet {
+    @media only screen and (max-width:1024px)  { @content; }
+  }
+
+  @else if $breakpoint == desktop {
+    @media only screen and (max-width: 1199px) { @content; }
+  }
+
+  @else if $breakpoint == large {
+    @media only screen and (min-width: 1200px) { @content; }
+  }
+  @else if $breakpoint == xlarge {
+    @media only screen and (min-width: 1600px) { @content; }
+  }
+  @else if $breakpoint == retina {
+    @media
+    only screen and (-webkit-min-device-pixel-ratio: 2dppx),
+    only screen and (   min--moz-device-pixel-ratio: 2dppx),
+    only screen and (     -o-min-device-pixel-ratio: 2/1dppx),
+    only screen and (        min-device-pixel-ratio: 2dppx),
+    only screen and (                min-resolution: 2dppx) {
+      @content;
+    }
+  }
+}

@@ -1,0 +1,95 @@
+#dashboard.container-fluid
+  .row
+    .col-sm-12.col-md-4
+      .row.table-header
+        .title.color-black.font-20.col-xs-6
+          = t('dashboard.setting-list')
+        / - if @settings.count > 0
+        /   = link_to ( image_tag('',:alt => "Settings Icon", :class => "col-xs-6") ), new_setting_path
+      %table.table-striped.table.with-footer
+        %thead
+          %th
+            = t('dashboard.table.name')
+          %th
+            = t('dashboard.table.code')
+          %th
+            = t('dashboard.table.action')
+        %tbody
+          - if @settings.count > 0
+            - @settings.each do |setting|
+              %tr
+                %td
+                  = link_to setting.name, edit_setting_path(setting.id)
+                %td.font-family-tnr
+                  = setting.code
+                  / uncomment this if main app can support qr code
+                  / %a.link_get_qr{"data-qr-src": generate_qr(setting.code)}
+                  /   get qr
+                %td
+                  %a.toggle_delete_setting{'data-toggle' => 'modal', 'data-target' => '#popup-delete-setting', 'data-setting-id' => setting.id }
+                    delete
+            %tr
+              %td{:colspan => "3"}
+                = link_to t('dashboard.add-new-setting'), new_setting_path
+          - else
+            %tr
+              %td.text-center{:colspan => 3}
+                .padding-10
+                  = image_tag 'jurnal.png', :class => 'img-responsive', :style => 'max-width:100px;display:inline-block;'
+                  %br
+                  = link_to t('dashboard.add-new-setting'), new_setting_path
+    .col-sm-12.col-md-8
+      .table-header.padding-bottom-20
+        .title.color-black.font-20
+          = t('dashboard.device-list')
+      %table.table-striped.table.with-footer
+        %thead
+          %th
+            = t('dashboard.table.device')
+          %th
+            = t('dashboard.table.setting-name')
+          %th
+            = t('dashboard.table.last-sync')
+          %th.text-right
+            = t('dashboard.table.sales-this-month')
+          %th.text-right
+            = t('dashboard.table.sales-this-year')
+        %tbody
+          - if @devices.length > 0
+            - @devices.each do |device|
+              %tr
+                %td
+                  = device.device_name
+                %td
+                  = device.setting.name
+                %td
+                  = device.last_sync.try(:strftime,'%d/%m/%Y %H.%M')
+                %td.text-right
+                  = number_to_currency(device.sales_this_month, unit: " ", separator: ".", delimiter: ",")
+                %td.text-right
+                  = number_to_currency(device.sales_this_year, unit: " ", separator: ".", delimiter: ",")
+            / %tr
+            /   %td.font-family-medium{:colspan => "3"}
+            /     = t('dashboard.table.total')
+            /   %td.font-family-medium.text-right
+            /     = number_to_currency(@devices.last.total_sales_this_month, unit: " ", separator: ".", delimiter: ",")
+            /   %td.font-family-medium.text-right
+            /     = number_to_currency(@devices.last.total_sales_this_year, unit: " ", separator: ".", delimiter: ",")
+          - else
+            %tr
+              %td{:colspan => "5"}
+                .row.row-eq-height
+                  .col-xs-5.row-eq-height.justify-content-end.align-items-center
+                    = image_tag 'jurnal.png', :class => 'img-responsive', :style => 'max-width:100px;'
+                  .col-xs-6
+                    = t('dashboard.table.device-empty').html_safe
+
+#spinner-group.spinner.hidden
+  .double-bounce1
+  .double-bounce2
+#spinner-backdrop.hidden
+= render 'popup_delete_setting'
+= render 'popup_qr'
+
+- content_for :scripts do
+  = javascript_include_tag 'home', "data-turbolinks-track" => true

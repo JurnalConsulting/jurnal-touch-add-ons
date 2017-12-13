@@ -1,0 +1,77 @@
+@mixin border-bottom($el: '') {
+  text-align: left;
+  border-style: solid;
+  border-width: 0 0 1px 0;
+  border-color: #D8D8D8;
+  @if $el != '' {
+    #{$el}{ border: 0; }
+  }
+}
+
+.form-row {
+  i{
+    float: right;
+    color: $blue-tooltip;
+  }
+  .input-wrapper {
+    text-align: right;
+    @include breakpoint(mobile){
+      text-align: left;
+    }
+    .input-resize, .select2-container {
+      width: 80% !important;
+    }
+  }
+  .input-border, .select2-container {
+    padding: 5px 20px;
+  }
+  .input-border {
+    @include border-bottom;
+  }
+
+  .select2-container {
+    @include border-bottom('.select2-selection');
+  }
+
+  .select2-selection__rendered {
+    padding: 0 !important;
+  }
+
+  .select2-selection__arrow {
+    height: 40px !important;
+    width: 25px !important;
+  }
+  .select2-hidden-accessible {
+    right: 50%;
+    top: 50%;
+  }
+  .select2-container--default .select2-selection--multiple {
+    background-color: transparent;
+  }
+  .select2-container--default.select2-container--disabled .select2-selection--single{
+    background-color: transparent;
+    .selection__rendered{
+      color: $light-grey;
+    }
+  }
+}
+
+.wrapper-setting-code{
+  width: 80% !important;
+  margin-left: auto;
+  padding-left: 15px;
+  text-align: left;
+  margin-right: 0;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  @include breakpoint(mobile){
+    margin-left: 0;
+  }
+  .btn-setting-code {
+    width: 100%;
+    font-size: 20px;
+    color: #414042;
+    background-color: #D8D8D8;
+  }
+}

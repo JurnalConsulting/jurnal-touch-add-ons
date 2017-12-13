@@ -1,0 +1,14 @@
+.modal.fade.custom-modal.modal-600.center-modal#popup-add-pay-method
+  .modal-dialog
+    .modal-content.border-r2
+      .modal-body
+        .row.padding-10.clear-topbottom-pad
+          .title.font-family-regular.font-20.col-xs-11#add-pay-method-title
+            = t('payment-method.add')
+          .title.font-family-regular.font-20.col-xs-11#edit-pay-method-title
+            = t('payment-method.edit')
+          %button{:class => 'close col-xs-1', 'data-dismiss' => 'modal'} ×
+        .row
+          .col-sm-12
+            = render 'payment_method/form',payment_method_url: @payment_method_url 
+          

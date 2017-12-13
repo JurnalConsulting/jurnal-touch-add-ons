@@ -1,0 +1,29 @@
+$table-striped : #F8F8F8;
+$table-border-bottom : #414042;
+
+.table {
+  th,td {
+    border: 0 !important;
+    font-family: $font-family--light;
+    &.padding-cell {
+      padding: 15px 25px !important;
+    }
+    &.font-family-medium {
+      font-family: $font-family--medium;
+    }
+  }
+  thead {
+    background-color: $blue;
+    color: $white;
+  }
+  &.with-footer {
+    border-bottom: 1px solid $table-border-bottom;
+  }
+}
+.table-striped {
+  tbody {
+    tr:nth-of-type(even) {
+      background-color: $table-striped;
+    }
+  }
+}

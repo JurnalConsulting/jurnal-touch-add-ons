@@ -1,0 +1,11 @@
+.modal.fade.custom-modal.modal-600.center-modal#popup-error-setting-form
+  .modal-dialog
+    .modal-content.border-r2
+      .modal-body
+        .row.padding-10.clear-topbottom-pad
+          .title.font-family-regular.font-12.col-xs-11.error-payment.type-cash
+            = t('payment-method.error-cash')
+          .title.font-family-regular.font-12.col-xs-11.error-payment.type-double
+            = t('payment-method.error-double')
+          %button{:class => 'close col-xs-1', 'data-dismiss' => 'modal'} ×
+          

@@ -1,0 +1,27 @@
+= simple_form_for @setting, :html => {id: "setting-form", class: "form-horizontal form"} do |f|
+  = f.hidden_field :code
+  = f.hidden_field :token
+  .row
+    .col-sm-12
+      .title.padding-bottom-20.font-family-medium
+        = t('setting.general-setting')
+      .row.row-eq-height.align-items-center.form-row.clear-topbottom-pad.padding-bottom-20
+        = f.label :name, :class => 'font-family-regular col-xs-4 col-sm-3 col-md-5' do
+          = t('setting.setting-name')
+          = icon('question-circle', '', 'data-toggle' => 'tooltip', 'data-placement' => 'right', :title => t('setting.setting-name-tooltip'))
+        = f.input :name, :label => false , :wrapper_html => {:class => "col-xs-6 col-sm-5 col-md-7 input-wrapper"}, :input_html => {:class => "input-resize input-border"}, default: @setting.name, :required => true
+      - if @company_package_enterprise_free == true
+        .row.row-eq-height.align-items-center.form-row.clear-topbottom-pad.padding-bottom-20
+          = f.label :warehouse, :class => 'font-family-regular col-xs-4 col-sm-3 col-md-5' do
+            = t('setting.setting-warehouse')
+            = icon('question-circle', '', 'data-toggle' => 'tooltip', 'data-placement' => 'right', :title => t('setting.setting-warehouse-tooltip'))
+          .input-wrapper.col-xs-6.col-sm-5.col-md-7.select2-wrapper-warehouse
+            = f.input :warehouse_id, collection: @warehouses, :label => false , default: @setting.warehouse, include_blank: false
+      - if @company_package_pro_enterprise_free == true
+        .row.row-eq-height.align-items-center.form-row.clear-topbottom-pad.padding-bottom-20
+          = f.label :tag, :class => 'font-family-regular col-xs-4 col-sm-3 col-md-5' do
+            = t('setting.setting-tag')
+            = icon('question-circle', '', 'data-toggle' => 'tooltip', 'data-placement' => 'right', :title => t('setting.setting-tag-tooltip'))
+          .input-wrapper.col-xs-6.col-sm-5.col-md-7.select2-wrapper-tags
+            = f.input :tag_ids, collection: @tags, :label => false , input_html: { multiple: true }, selected: @setting_tag_ids, include_blank: false
+  = f.button :submit, :class => 'hidden'
